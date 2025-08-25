@@ -1,0 +1,40 @@
+data:
+  data_path: 
+  batch_size: 32
+
+cbegan:
+  feature_dim: 519
+  noise_dim: 64
+  pos_embedding_dim: 20
+  initial_lr: 0.0001
+  eta_min: 0.000001
+  max_epochs: 500
+  lambda_k: 0.001
+  gamma: 0.9
+  only_disc_epochs: 10
+
+cvae:
+  feature_dim: 519
+  latent_dim: 100
+  activation: elu # elu, relu, sigmoid
+  n_layer: 3
+  initial_lr: 0.001
+  pos_embedding_dim: 20
+  optimizer: Adam
+  max_epochs: 500
+  rec_weight: 10 
+
+annealer:
+    cyclical_annealing: True # False to turn off, regardless of other params
+    cyclical: True # False to keep anneal factor = 1 after first cycle
+    shape: cosine  # "logistic", "cosine", "linear"
+    total_steps: 50
+    baseline: 0
+
+# must match columns names in the data csv/xlsx/parquet
+condition_labels:
+  categorical:
+    - sex
+  continuous:
+    - bmi
+    - age
