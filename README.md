@@ -25,6 +25,13 @@ python train.py --model cbegan
 ```
 All configurations for the models can be made in the **configs.yaml** file. 
 
+#### Models overview:
+
+<div align="center">
+  <img src="imgs/CVAE.png" alt="CVAE Model Architecture" width="45%">
+  <img src="imgs/CBEGAN.png" alt="CBEGAN Model Architecture" width="45%">
+</div>
+
 #### Data preparation
 
 The data path is set in the configs. Data can be provided in .csv, .xlsx or .parquet format.
@@ -45,6 +52,13 @@ git lfs pull
 ```
 
 to download the pretrained models tracked by Git LFS.
+
+#### Additional Data Information
+The pretrained models were trained with the following conditional data distributions:
+
+![Data Distributions](/imgs/data_distributions.png "Data Distribution")
+
+Data generation outside the distributions of the conditions in the training data set can lead to incorrect results (e.g., samples for patients < 35 years of age).        
 
 ## Collaborations
 
