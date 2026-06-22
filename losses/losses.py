@@ -1,6 +1,5 @@
 import torch
 
-
 class VAELoss(torch.nn.Module):
     """
     Calculates reconstruction loss and KL divergence loss for VAE.

@@ -3,7 +3,7 @@ import lightning.pytorch as pl
 from models.cvae_model import CondVAE
 from losses.losses import VAELoss
 from utils.annealer import Annealer
-
+import numpy as np
 
 class LitVAE(pl.LightningModule):
     def __init__(
