@@ -1,28 +1,20 @@
+# ~~~ DATA ~~~
 data:
-  data_path: 
-  batch_size: 32
+  data_path: ./data/h4h_raw_2024-09-16_with_subject_ids.parquet
+  batch_size: 128
+# -------------
 
-cbegan:
-  feature_dim: 519
-  noise_dim: 64
-  pos_embedding_dim: 20
-  initial_lr: 0.0001
-  eta_min: 0.000001
-  max_epochs: 500
-  lambda_k: 0.001
-  gamma: 0.9
-  only_disc_epochs: 10
-
+# ~~~ CVAE ~~~
 cvae:
   feature_dim: 519
   latent_dim: 100
   activation: elu # elu, relu, sigmoid
   n_layer: 3
-  initial_lr: 0.001
+  initial_lr: 0.0001
   pos_embedding_dim: 20
   optimizer: Adam
   max_epochs: 500
-  rec_weight: 10 
+  rec_weight: 10
 
 annealer:
     cyclical_annealing: True # False to turn off, regardless of other params
@@ -30,7 +22,44 @@ annealer:
     shape: cosine  # "logistic", "cosine", "linear"
     total_steps: 50
     baseline: 0
+# ---------------------
 
+# ~~~ CBEGAN ~~~
+cbegan:
+  feature_dim: 519
+  noise_dim: 64
+  pos_embedding_dim: 20
+  initial_lr: 0.0001
+  eta_min: 0.0000001
+  max_epochs: 500
+  lambda_k: 0.001
+  gamma: 0.9
+  only_disc_epochs: 10
+# ---------------------
+
+# ~~~ CDIFF ~~~
+cdiff:
+  feature_dim: 519
+  model_type: 'FiLMResMLP'    # MLP, ResMLP, FiLMResMLP
+  hidden_dim: 700
+  pos_embedding_dim: 24
+  timestep_embedding_dim: 42
+  n_layer: 6
+  n_timesteps: 128
+  s_timestep_schedule: 0.008
+  p_uncond: 0.20
+  activation: 'silu'
+  ema_decay: 0.9
+  learning_rate: 0.0008
+  optimizer: AdamW
+  weight_decay: 0.001
+  lr_scheduler: 'cosine'
+  warmup_steps: 500
+  max_epochs: 1000
+  patience: 50
+# ---------------------
+
+# ~~~ CONDITIONS ~~~
 # must match columns names in the data csv/xlsx/parquet
 condition_labels:
   categorical:
@@ -38,3 +67,4 @@ condition_labels:
   continuous:
     - bmi
     - age
+# ---------------------

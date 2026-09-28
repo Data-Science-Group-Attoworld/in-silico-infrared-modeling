@@ -24,9 +24,9 @@ class SpectralDataset(Dataset):
 
     def __getitem__(self, idx):
         row = self.data.iloc[idx]
-        spectrum = torch.tensor(row[self.features].values, dtype=torch.float32)
+        spectrum = torch.tensor(row.loc[self.features].values, dtype=torch.float32)
         condition_dict = {
-            label: torch.tensor(row[label], dtype=torch.float32)
+            label: torch.tensor(row.loc[label], dtype=torch.float32)
             for label in self.conditions
         }
         return {"spectrum": spectrum, "labels": condition_dict}

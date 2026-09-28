@@ -8,4 +8,5 @@ matplotlib>=3.9.0
 seaborn>=0.13.0
 tqdm>=4.66.0
 jupyter>=1.0.0
+torch-ema==0.3
 

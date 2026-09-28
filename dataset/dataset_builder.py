@@ -11,11 +11,11 @@ from utils.utils import load_config
 
 
 class SpectralDatasetBuilder:
-    def __init__(self, data_path, data_split):
+    def __init__(self, data_path, data_split, config_path='./config.yaml'):
         pd.set_option("future.no_silent_downcasting", True)
         np.random.seed(42)
 
-        cfg = load_config()
+        cfg = load_config(config_path)
 
         # Initialize paths and config
         self.data_path = data_path

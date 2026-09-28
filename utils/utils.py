@@ -7,13 +7,13 @@ def load_config(path="config.yaml"):
     with open(path, "r") as f:
         return yaml.safe_load(f)
 
-def position_encoding(timesteps, embedding_size, device):
+def position_encoding(timesteps, embedding_size, device, base=0.1):
     """Positional encoding for conditioning vectors."""
     timesteps = timesteps.to(device)
     
     # Calculate inverse frequencies
     inv_freq = 1.0 / (
-        0.1
+        base
         ** (torch.arange(0, embedding_size, 2, device=device).float() / embedding_size)
     )
     
@@ -33,7 +33,7 @@ def position_encoding(timesteps, embedding_size, device):
     return pos_enc
 
 
-def encode_labels(labels_dict, embedding_size, device):
+def encode_labels(labels_dict, embedding_size, device, pe_base=0.1):
     """Gets condition/label dict and converts input into valid network input."""
     encoded_labels = []
 
@@ -43,7 +43,7 @@ def encode_labels(labels_dict, embedding_size, device):
             label_tensor = label_tensor.unsqueeze(1)
 
         encoded = position_encoding(
-            label_tensor, embedding_size=embedding_size, device=device
+            label_tensor, embedding_size=embedding_size, device=device, base=pe_base,
         )
         encoded_labels.append(encoded)
 
